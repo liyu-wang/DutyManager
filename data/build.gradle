@@ -1,0 +1,31 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+    api "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    api "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    api "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    api "com.squareup.okhttp3:okhttp:$okhttpVersion"
+
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+
+    api "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+
+    //room
+    api "android.arch.persistence.room:runtime:$roomVersion"
+    kapt "android.arch.persistence.room:compiler:$roomVersion" // use kapt for Kotlin
+    api "android.arch.persistence.room:rxjava2:$roomVersion"
+
+    //test
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "android.arch.persistence.room:testing:$roomVersion"
+    testImplementation "org.hamcrest:hamcrest-library:$hamcrestVersion"
+
+}
