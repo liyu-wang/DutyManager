@@ -1,9 +1,9 @@
 package kevinsong.com.data.businessinfo
 
-import io.reactivex.Observer
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -27,9 +27,9 @@ class BusinessInfoRepositoryTest {
         Mockito.`when`(dao.getBusinessInfo()).thenReturn(Single.create { mockBusinessInfo })
         val repository = BusinessInfoRepository(service, dao)
         val bussinessInfo = repository.getBusinessInfo()
-        bussinessInfo.subscribe(object:SingleObserver<BusinessInfo>{
+        bussinessInfo.subscribe(object : SingleObserver<BusinessInfo> {
             override fun onSuccess(t: BusinessInfo) {
-                org.junit.Assert.assertEquals(t,mockBusinessInfo)
+                Assert.assertEquals(t, mockBusinessInfo)
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -37,7 +37,7 @@ class BusinessInfoRepositoryTest {
             }
 
             override fun onError(e: Throwable) {
-
+                Assert.fail("BusinessInfoRepositoryTest: ${e.message}")
             }
 
         })
