@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="shift"
+            type="kevinsong.com.data.shift.Shift" />
+    </data>
+
+    <LinearLayout
+        style="@style/WrapContent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/shift_image_size"
+            android:layout_height="@dimen/shift_image_size"
+            app:url="@{shift.image}" />
+
+        <TextView
+            android:id="@+id/content"
+            style="@style/WrapContent"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@{shift.start}"
+            android:textAppearance="?attr/textAppearanceListItem" />
+    </LinearLayout>
+</layout>

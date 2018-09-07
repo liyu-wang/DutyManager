@@ -2,7 +2,7 @@ package kevinsong.com.data.shift
 
 import io.reactivex.Single
 
-class ShiftRepositoryImpl(val service: ShiftService, val dao: ShiftDao) : ShiftRepository {
+class ShiftRepositoryImpl(private val service: ShiftService, private val dao: ShiftDao) : ShiftRepository {
 
     var cachedResult: List<Shift>? = null
 
@@ -19,7 +19,9 @@ class ShiftRepositoryImpl(val service: ShiftService, val dao: ShiftDao) : ShiftR
         cachedResult?.let { return Single.create { cachedResult } }
 
         var localResult: Single<List<Shift>> = dao.getAllShfits()
-        return localResult.filter { !it.isEmpty() }.switchIfEmpty(remoteResult)
+        return localResult.filter {
+            !it.isEmpty()
+        }.switchIfEmpty(remoteResult)
     }
 
     override fun startShift(shiftBody: ShiftRequest) = service.startShift(shiftBody)

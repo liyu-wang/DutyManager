@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DutyManager</string>
+    <string name="baseurl">https://apjoqdqpi3.execute-api.us-west-2.amazonaws.com/dmc/</string>
+    <string name="scret_key">ffb4761cba839470133bee36aeb139f58d7dbaa9</string>
+    <string name="title_shift_list">Shifts</string>
+    <string name="title_shift_detail">Shift Detail</string>
 </resources>
