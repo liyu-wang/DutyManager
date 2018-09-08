@@ -29,7 +29,7 @@ class ShiftDetailFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.shift_detail, container, false)
         item?.let {
-            rootView.shift_detail.text = it.start
+            rootView.shift_detail.text = it.toString()
         }
 
         return rootView

@@ -9,15 +9,17 @@ class BusinessInfoRepository(private val service: BusinessInfoService, private v
 
     fun getBusinessInfo(): Single<BusinessInfo> {
         cachedBusinessInfo?.let {
-            return Single.create { cachedBusinessInfo }
+            return Single.just(cachedBusinessInfo)
         }
 
         var localResult = dao.getBusinessInfo().doAfterSuccess {
-            cachedBusinessInfo = it
-            dao.saveBusinessInfo(it)
+            it?.let {
+                cachedBusinessInfo = it
+            }
         }
         var remoteResult = service.getBussinessInfo().doAfterSuccess {
             cachedBusinessInfo = it
+            dao.saveBusinessInfo(it)
         }
 
         return localResult.filter {

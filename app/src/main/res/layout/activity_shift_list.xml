@@ -1,41 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".shift.ShiftListActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <data>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <variable
+            name="info"
+            type="kevinsong.com.data.businessinfo.BusinessInfo" />
+    </data>
 
-    </android.support.design.widget.AppBarLayout>
-
-    <FrameLayout
-        android:id="@+id/frameLayout"
+    <android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:fitsSystemWindows="true"
+        tools:context=".shift.ShiftListActivity">
 
-        <include layout="@layout/shift_list" />
-    </FrameLayout>
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        style="@style/WrapContent"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/btn_action" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <ImageView
+                    android:id="@+id/logo"
+                    url="@{info.logo}"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="deputy logo" />
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/WrapContent"
+                    android:layout_centerInParent="true"
+                    android:paddingLeft="@dimen/gap_small"
+                    android:ellipsize="end"
+                    android:text="@{info.name}"
+                    android:textSize="20dp"
+                    tools:text="Toolbar Title" />
 
 
-</android.support.design.widget.CoordinatorLayout>
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <include layout="@layout/shift_list" />
+        </FrameLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            style="@style/WrapContent"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/btn_action" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

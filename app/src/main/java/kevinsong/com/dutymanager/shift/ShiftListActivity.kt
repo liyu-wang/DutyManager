@@ -5,14 +5,18 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.pm.PackageManager
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import kevinsong.com.data.businessinfo.BusinessInfo
 import kevinsong.com.dutymanager.DutyManagerApplication
 import kevinsong.com.dutymanager.LocationProvider
 import kevinsong.com.dutymanager.R
+import kevinsong.com.dutymanager.bussinessinfo.InfoViewModel
+import kevinsong.com.dutymanager.databinding.ActivityShiftListBinding
 import kotlinx.android.synthetic.main.activity_shift_list.*
 import kotlinx.android.synthetic.main.shift_list.*
 import javax.inject.Inject
@@ -28,21 +32,26 @@ class ShiftListActivity : AppCompatActivity() {
 
     private lateinit var shiftViewModel: ShiftViewModel
 
+    private lateinit var infoViewModel: InfoViewModel
+    private lateinit var binding: ActivityShiftListBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as DutyManagerApplication).appComponent.inject(this)
-        setContentView(R.layout.activity_shift_list)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_shift_list)
         setSupportActionBar(toolbar)
-        toolbar.title = title
         shiftViewModel = ViewModelProviders.of(this, viewModeFactory)
                 .get(ShiftViewModel::class.java)
-        refreshView()
-        fab.setOnClickListener { checkLocationPermission() }
+        infoViewModel = ViewModelProviders.of(this, viewModeFactory).get(InfoViewModel::class.java)
 
+        fab.setOnClickListener { checkLocationPermission() }
+        refreshList()
+        refreshToolBar()
 
     }
 
-    private fun refreshView() {
+    private fun refreshList() {
         twoPane = shift_detail_container != null
         shift_list.adapter = SimpleItemRecyclerViewAdapter(this, shiftViewModel.shiftList, twoPane)
         shiftViewModel.getAllShifts(false)
@@ -52,6 +61,15 @@ class ShiftListActivity : AppCompatActivity() {
             }
         })
         shiftViewModel.inMiddleOfShift.observe(this, Observer<Boolean> { t -> fab.isSelected = t ?: false })
+
+    }
+
+    private fun refreshToolBar() {
+        infoViewModel.businessInfo.observe(this, Observer<BusinessInfo> { info ->
+            info?.let { binding.info = it }
+        })
+        title = ""
+        infoViewModel.getinfo()
     }
 
     private fun checkLocationPermission() {
@@ -69,7 +87,9 @@ class ShiftListActivity : AppCompatActivity() {
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty()
+                        && permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startShiftWithLocation()
 
                 } else {

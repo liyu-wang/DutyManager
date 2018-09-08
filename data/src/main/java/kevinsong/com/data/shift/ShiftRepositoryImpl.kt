@@ -16,7 +16,7 @@ class ShiftRepositoryImpl(private val service: ShiftService, private val dao: Sh
 
         if (forceUpdate) return remoteResult
 
-        cachedResult?.let { return Single.create { cachedResult } }
+        cachedResult?.let { return Single.just(cachedResult) }
 
         var localResult: Single<List<Shift>> = dao.getAllShfits()
         return localResult.filter {

@@ -1,4 +1,4 @@
-package kevinsong.com.dutymanager.di
+package kevinsong.com.dutymanager.di.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
