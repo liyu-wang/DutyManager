@@ -1,6 +1,7 @@
 package kevinsong.com.dutymanager.shift
 
 import android.arch.lifecycle.MutableLiveData
+import android.location.Location
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class ShiftViewModel
 @Inject constructor(private val shiftRepository: ShiftRepository) : BaseViewModel() {
     var shiftList = MutableLiveData<List<Shift>>()
+    var inMiddleOfShift = false
 
     fun getAllShifts(forceUpdate: Boolean) {
         shiftRepository.getShifts(forceUpdate)
@@ -23,6 +25,7 @@ class ShiftViewModel
                 .subscribe(object : SingleObserver<List<Shift>> {
                     override fun onSuccess(list: List<Shift>) {
                         shiftList.value = list
+                        inMiddleOfShift = list.lastOrNull()?.end?.isNullOrBlank() ?: false
                     }
 
                     override fun onSubscribe(d: Disposable) {
@@ -34,10 +37,24 @@ class ShiftViewModel
                 })
     }
 
-    fun startShift() {
-        val body = ShiftRequest(Date().toString())
-        shiftRepository.startShift(body).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableCompletableObserver() {
+    fun operateShift(location: Location?) {
+        val request = ShiftRequest(Date().toString())
+        location?.let {
+            request.latitude = it.latitude.toString()
+            request.longitude = it.longitude.toString()
+        }
+        if (inMiddleOfShift) {
+            endShift(request)
+        } else {
+            startShift(request)
+        }
+    }
+
+    fun startShift(request: ShiftRequest) {
+
+        shiftRepository.startShift(request).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableCompletableObserver() {
             override fun onComplete() {
+                getAllShifts(true)
                 message.value = "Start shift successfully."
             }
 
@@ -47,11 +64,12 @@ class ShiftViewModel
         })
     }
 
-    fun endShift() {
-        val body = ShiftRequest(Date().toString())
-        shiftRepository.stopShift(body).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableCompletableObserver() {
+    fun endShift(request: ShiftRequest) {
+
+        shiftRepository.stopShift(request).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableCompletableObserver() {
             override fun onComplete() {
                 message.value = "End shift successfully."
+                getAllShifts(true)
             }
 
             override fun onError(e: Throwable) {

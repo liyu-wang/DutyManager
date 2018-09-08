@@ -38,7 +38,7 @@ dependencies {
     implementation "com.android.support:design:$supportLibraryVersion"
     implementation "com.android.support.constraint:constraint-layout:$constrainLayoutVersion"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    implementation 'com.google...'
+    implementation "com.google.android.gms:play-services-location:$googleServiceVersion"
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //dagger2
@@ -47,8 +47,6 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     implementation 'javax.annotation:jsr250-api:1.0'
-
-
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
