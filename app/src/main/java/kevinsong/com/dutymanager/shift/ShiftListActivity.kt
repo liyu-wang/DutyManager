@@ -38,18 +38,20 @@ class ShiftListActivity : AppCompatActivity() {
                 .get(ShiftViewModel::class.java)
         refreshView()
         fab.setOnClickListener { checkLocationPermission() }
-        shiftViewModel.message.observe(this, Observer<String> { t ->
-            t?.let {
-                Snackbar.make(this@ShiftListActivity.findViewById(android.R.id.content), it, Snackbar.LENGTH_LONG).show()
-            }
-        })
+
 
     }
 
     private fun refreshView() {
         twoPane = shift_detail_container != null
         shift_list.adapter = SimpleItemRecyclerViewAdapter(this, shiftViewModel.shiftList, twoPane)
-        shiftViewModel.getAllShifts(true)
+        shiftViewModel.getAllShifts(false)
+        shiftViewModel.message.observe(this, Observer<String> { t ->
+            t?.let {
+                Snackbar.make(this@ShiftListActivity.findViewById(android.R.id.content), it, Snackbar.LENGTH_LONG).show()
+            }
+        })
+        shiftViewModel.inMiddleOfShift.observe(this, Observer<Boolean> { t -> fab.isSelected = t ?: false })
     }
 
     private fun checkLocationPermission() {

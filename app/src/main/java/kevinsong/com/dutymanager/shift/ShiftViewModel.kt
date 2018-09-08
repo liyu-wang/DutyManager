@@ -17,7 +17,7 @@ import javax.inject.Inject
 class ShiftViewModel
 @Inject constructor(private val shiftRepository: ShiftRepository) : BaseViewModel() {
     var shiftList = MutableLiveData<List<Shift>>()
-    var inMiddleOfShift = false
+    var inMiddleOfShift = MutableLiveData<Boolean>()
 
     fun getAllShifts(forceUpdate: Boolean) {
         shiftRepository.getShifts(forceUpdate)
@@ -25,7 +25,7 @@ class ShiftViewModel
                 .subscribe(object : SingleObserver<List<Shift>> {
                     override fun onSuccess(list: List<Shift>) {
                         shiftList.value = list
-                        inMiddleOfShift = list.lastOrNull()?.end?.isNullOrBlank() ?: false
+                        inMiddleOfShift.value = list.lastOrNull()?.end?.isNullOrBlank() ?: false
                     }
 
                     override fun onSubscribe(d: Disposable) {
@@ -43,7 +43,7 @@ class ShiftViewModel
             request.latitude = it.latitude.toString()
             request.longitude = it.longitude.toString()
         }
-        if (inMiddleOfShift) {
+        if (inMiddleOfShift.value == true) {
             endShift(request)
         } else {
             startShift(request)
