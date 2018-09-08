@@ -3,6 +3,7 @@ package kevinsong.com.dutymanager.binding
 import android.databinding.BindingAdapter
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
+import kevinsong.com.dutymanager.R
 import java.util.*
 
 object ImageBindingAdapter {
@@ -13,6 +14,7 @@ object ImageBindingAdapter {
         Picasso.get()
                 .load(url + Random().nextInt())
                 .fit()
+                .placeholder(R.drawable.image_default)
                 .into(imageView)
     }
 }
