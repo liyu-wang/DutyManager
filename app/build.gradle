@@ -26,6 +26,10 @@ android {
     dataBinding {
         enabled true
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -70,9 +74,13 @@ dependencies {
     kapt "com.android.databinding:compiler:$gradleVersion"
 
     //test
-    testImplementation 'junit:junit:4.12'
-
-    implementation project(path: ':data')
+    //test
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "android.arch.persistence.room:testing:$roomVersion"
+    testImplementation "org.hamcrest:hamcrest-library:$hamcrestVersion"
 
     implementation "com.facebook.stetho:stetho:1.5.0"
+
+    implementation project(path: ':data')
 }

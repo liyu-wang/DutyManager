@@ -3,11 +3,11 @@ package kevinsong.com.data.businessinfo
 import io.reactivex.Single
 
 
-class BusinessInfoRepository(private val service: BusinessInfoService, private val dao: BusinessInfoDao) {
+open class BusinessInfoRepository(private val service: BusinessInfoService, private val dao: BusinessInfoDao) {
 
     private var cachedBusinessInfo: BusinessInfo? = null
 
-    fun getBusinessInfo(): Single<BusinessInfo> {
+    open fun getBusinessInfo(): Single<BusinessInfo> {
         cachedBusinessInfo?.let {
             return Single.just(cachedBusinessInfo)
         }
