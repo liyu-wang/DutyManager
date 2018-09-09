@@ -1,4 +1,4 @@
-package kevinsong.com.dutymanager.bussinessinfo
+package kevinsong.com.dutymanager.shift
 
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log

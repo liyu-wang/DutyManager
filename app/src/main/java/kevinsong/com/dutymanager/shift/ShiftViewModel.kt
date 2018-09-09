@@ -10,6 +10,7 @@ import io.reactivex.schedulers.Schedulers
 import kevinsong.com.data.shift.Shift
 import kevinsong.com.data.shift.ShiftRepository
 import kevinsong.com.data.shift.ShiftRequest
+import kevinsong.com.data.shift.isInProgress
 import kevinsong.com.dutymanager.base.BaseViewModel
 import java.util.*
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class ShiftViewModel
                 .subscribe(object : SingleObserver<List<Shift>> {
                     override fun onSuccess(list: List<Shift>) {
                         shiftList.value = list
-                        inMiddleOfShift.value = list.lastOrNull()?.end?.isNullOrBlank() ?: false
+                        inMiddleOfShift.value = list.lastOrNull()?.isInProgress()
                     }
 
                     override fun onSubscribe(d: Disposable) {

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kevinsong.com.data.shift.Shift
+import kevinsong.com.data.shift.isInProgress
 import kevinsong.com.dutymanager.R
 import kevinsong.com.dutymanager.databinding.ShiftListContentBinding
 
@@ -58,6 +59,12 @@ class SimpleItemRecyclerViewAdapter(private val parentActivity: ShiftListActivit
         val binding: ShiftListContentBinding? = DataBindingUtil.getBinding(holder.itemView)
         val item = shiftList[position]
         binding?.shift = item
+        if (item.isInProgress()) {
+            binding?.inProgressVisibility = View.VISIBLE
+        } else {
+            binding?.inProgressVisibility = View.GONE
+        }
+
 
         with(holder.itemView) {
             tag = item

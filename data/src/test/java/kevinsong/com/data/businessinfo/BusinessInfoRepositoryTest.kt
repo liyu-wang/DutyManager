@@ -1,5 +1,6 @@
 package kevinsong.com.data.businessinfo
 
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
@@ -24,7 +25,7 @@ class BusinessInfoRepositoryTest {
     @Test
     fun testGetBusinessInfo() {
         Mockito.`when`(service.getBussinessInfo()).thenReturn(Single.create { mockBusinessInfo })
-        Mockito.`when`(dao.getBusinessInfo()).thenReturn(Single.create { mockBusinessInfo })
+        Mockito.`when`(dao.getBusinessInfo()).thenReturn(Maybe.just(mockBusinessInfo))
         val repository = BusinessInfoRepository(service, dao)
         val bussinessInfo = repository.getBusinessInfo()
         bussinessInfo.subscribe(object : SingleObserver<BusinessInfo> {

@@ -2,8 +2,10 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">200dp</dimen>
-    <dimen name="item_width">256dp</dimen>
+    <dimen name="item_width">384dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="shift_image_size">48dp</dimen>
+    <dimen name="shift_image_size">64dp</dimen>
     <dimen name="gap_small">6dp</dimen>
+    <dimen name="text_size_large">18dp</dimen>
+    <dimen name="text_size_medium">14dp</dimen>
 </resources>

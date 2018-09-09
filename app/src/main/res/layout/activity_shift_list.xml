@@ -27,7 +27,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
-                <ImageView
+                <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/logo"
                     url="@{info.logo}"
                     android:layout_width="36dp"
@@ -35,7 +35,7 @@
                     android:layout_centerInParent="true"
                     android:contentDescription="deputy logo" />
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/title"
                     style="@style/WrapContent"
                     android:layout_centerInParent="true"

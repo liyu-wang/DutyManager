@@ -15,7 +15,6 @@ import kevinsong.com.data.businessinfo.BusinessInfo
 import kevinsong.com.dutymanager.DutyManagerApplication
 import kevinsong.com.dutymanager.LocationProvider
 import kevinsong.com.dutymanager.R
-import kevinsong.com.dutymanager.bussinessinfo.InfoViewModel
 import kevinsong.com.dutymanager.databinding.ActivityShiftListBinding
 import kotlinx.android.synthetic.main.activity_shift_list.*
 import kotlinx.android.synthetic.main.shift_list.*
